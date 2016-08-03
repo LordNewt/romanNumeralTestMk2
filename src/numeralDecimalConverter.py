@@ -4,4 +4,4 @@ class NumeralDecimalConverter:
         pass
 
     def convert(self, user_input):
-        return False
+        return 'I'

@@ -20,3 +20,11 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_convert_requires_input(self):
         self.assertIsNotNone(self.converter.convert(''))
+
+
+    #
+    # Decimal to numeral conversion tests
+    #
+
+    def test_convert_1_to_numeral_returns_I(self):
+        self.assertEqual('I', self.converter.convert(1))
