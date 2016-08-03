@@ -43,3 +43,6 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_convert_5_to_numeral_returns_V(self):
         self.assertEqual('V', self.converter.convert(5))
+
+    def test_convert_recognizes_all_valid_numerals(self):
+        self.assertEqual('MDCLXVI', self.converter.convert(1666))
