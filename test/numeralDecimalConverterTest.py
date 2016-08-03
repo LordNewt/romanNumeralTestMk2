@@ -14,3 +14,6 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_converter_class_exists(self):
         self.assertIsNotNone(self.converter)
+
+    def test_convert_method_exists(self):
+        self.assertIsNotNone(self.converter.convert())
