@@ -1,5 +1,10 @@
 class NumeralDecimalConverter:
 
+    decimal_to_numeral_data = {
+        5: 'V',
+        1: 'I'
+    }
+
     def __init__(self):
         pass
 
@@ -27,8 +32,11 @@ class NumeralDecimalConverter:
         # While the value is greater than zero, add an 'I' numeral and
         # decrease the remaining value by 1.
         while decimal_value > 0:
-            output_string += 'I'
-            decimal_value -= 1
+            for dict_decimal, numeral in sorted(self.decimal_to_numeral_data.items(), reverse=True):
+                if dict_decimal <= decimal_value:
+                    output_string += numeral
+                    decimal_value -= dict_decimal
+                    break
 
         # Return the output string
         return output_string

@@ -40,3 +40,6 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_convert_3_to_numeral_returns_III(self):
         self.assertEqual('III', self.converter.convert(3))
+
+    def test_convert_5_to_numeral_returns_V(self):
+        self.assertEqual('V', self.converter.convert(5))
