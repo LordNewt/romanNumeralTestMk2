@@ -19,7 +19,7 @@ class NumeralDecimalConverterTest(unittest.TestCase):
         self.assertRaises(TypeError, self.converter.convert)
 
     def test_convert_requires_input(self):
-        self.assertIsNotNone(self.converter.convert(''))
+        self.assertFalse(self.converter.convert(''))
 
 
     #
@@ -28,3 +28,6 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_convert_1_to_numeral_returns_I(self):
         self.assertEqual('I', self.converter.convert(1))
+
+    def test_convert_understands_integers_as_strings(self):
+        self.assertEqual('I', self.converter.convert('1'))
