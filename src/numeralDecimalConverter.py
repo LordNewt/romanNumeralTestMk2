@@ -12,7 +12,7 @@ class NumeralDecimalConverter:
         if isinstance(user_input, int):
             return self.decimal_to_numeral_conversion(user_input)
         elif isinstance(user_input, str) and user_input.isdecimal():
-            return self.decimal_to_numeral_conversion(user_input)
+            return self.decimal_to_numeral_conversion(int(user_input))
 
         return False
 

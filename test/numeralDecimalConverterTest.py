@@ -21,6 +21,12 @@ class NumeralDecimalConverterTest(unittest.TestCase):
     def test_convert_requires_input(self):
         self.assertFalse(self.converter.convert(''))
 
+    def test_convert_rejects_floats(self):
+        self.assertFalse(self.converter.convert(1.1))
+
+    def test_convert_rejects_float_as_string(self):
+        self.assertFalse(self.converter.convert('1.1'))
+
 
     #
     # Decimal to numeral conversion tests
