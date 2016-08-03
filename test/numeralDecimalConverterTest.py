@@ -38,11 +38,11 @@ class NumeralDecimalConverterTest(unittest.TestCase):
     def test_convert_understands_integers_as_strings(self):
         self.assertEqual('I', self.converter.convert('1'))
 
-    def test_convert_3_to_numeral_returns_III(self):
+    def test_convert_can_do_repetitive_numerals(self):
         self.assertEqual('III', self.converter.convert(3))
-
-    def test_convert_5_to_numeral_returns_V(self):
-        self.assertEqual('V', self.converter.convert(5))
 
     def test_convert_recognizes_all_valid_numerals(self):
         self.assertEqual('MDCLXVI', self.converter.convert(1666))
+
+    def test_convert_can_combine_numerals_to_represent_value_decreases(self):
+        self.assertEqual('IV', self.converter.convert(4))

@@ -1,13 +1,14 @@
 class NumeralDecimalConverter:
 
+    # Decimal to numeral conversion data dictionary
     decimal_to_numeral_data = {
-        1000: 'M',
-        500: 'D',
-        100: 'C',
-        50: 'L',
-        10: 'X',
-        5: 'V',
-        1: 'I'
+        1000: {'numeral': 'M', 'reduced_by': 100},
+        500: {'numeral': 'D', 'reduced_by': 100},
+        100: {'numeral': 'C', 'reduced_by': 10},
+        50: {'numeral': 'L', 'reduced_by': 10},
+        10: {'numeral': 'X', 'reduced_by': 1},
+        5: {'numeral': 'V', 'reduced_by': 1},
+        1: {'numeral': 'I', 'reduced_by': 0}
     }
 
     def __init__(self):
@@ -34,13 +35,30 @@ class NumeralDecimalConverter:
         # Init an output string of numeral characters
         output_string = ''
 
-        # While the value is greater than zero, add an 'I' numeral and
-        # decrease the remaining value by 1.
+        # Loop through this section, reducing the remaining decimal_value
+        # until it reaches zero
         while decimal_value > 0:
-            for dict_decimal, numeral in sorted(self.decimal_to_numeral_data.items(), reverse=True):
+
+            # Go through each numeral value from highest to lowest to see if
+            # that numeral can be added to the output
+            for dict_decimal, decimal_data in sorted(self.decimal_to_numeral_data.items(), reverse=True):
+
+                # If the current numeral has a value less than or equal to
+                # the remaining decimal_value, add that numeral to the output
+                # and reduce by the value of the numeral
                 if dict_decimal <= decimal_value:
-                    output_string += numeral
+                    output_string += decimal_data['numeral']
                     decimal_value -= dict_decimal
+                    break
+
+                # If the current numeral minus its 'reduced by' value is less
+                # than or equal to the remaining decimal_value, add the numeral
+                # combo to the output and reduce by the value of the difference
+                # of the two numerals
+                elif (dict_decimal - decimal_data['reduced_by']) <= decimal_value:
+                    output_string += self.decimal_to_numeral_data[decimal_data['reduced_by']]['numeral'] + \
+                                     decimal_data['numeral']
+                    decimal_value -= (dict_decimal - decimal_data['reduced_by'])
                     break
 
         # Return the output string
