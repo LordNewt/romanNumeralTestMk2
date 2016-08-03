@@ -3,5 +3,5 @@ class NumeralDecimalConverter:
     def __init__(self):
         pass
 
-    def convert(self):
+    def convert(self, user_input):
         return False
