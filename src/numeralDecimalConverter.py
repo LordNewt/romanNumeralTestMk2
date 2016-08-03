@@ -19,5 +19,16 @@ class NumeralDecimalConverter:
     #
     # Method that will only do decimal to numeral conversions
     #
-    def decimal_to_numeral_conversion(self, decimal):
-        return 'I'
+    def decimal_to_numeral_conversion(self, decimal_value):
+
+        # Init an output string of numeral characters
+        output_string = ''
+
+        # While the value is greater than zero, add an 'I' numeral and
+        # decrease the remaining value by 1.
+        while decimal_value > 0:
+            output_string += 'I'
+            decimal_value -= 1
+
+        # Return the output string
+        return output_string

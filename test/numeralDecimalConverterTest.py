@@ -37,3 +37,6 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_convert_understands_integers_as_strings(self):
         self.assertEqual('I', self.converter.convert('1'))
+
+    def test_convert_3_to_numeral_returns_III(self):
+        self.assertEqual('III', self.converter.convert(3))
