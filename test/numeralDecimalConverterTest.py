@@ -60,3 +60,6 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_convert_understands_repetitive_numerals(self):
         self.assertEqual(3, self.converter.convert('III'))
+
+    def test_convert_recognizes_all_numerals(self):
+        self.assertEqual(1666, self.converter.convert('MDCLXVI'))

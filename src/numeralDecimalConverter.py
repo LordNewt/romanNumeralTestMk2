@@ -11,6 +11,17 @@ class NumeralDecimalConverter:
         1: {'numeral': 'I', 'reduced_by': 0}
     }
 
+    # Numeral to decimal value data dictionary
+    numeral_to_decimal_data = {
+        'M': 1000,
+        'D': 500,
+        'C': 100,
+        'L': 50,
+        'X': 10,
+        'V': 5,
+        'I': 1
+    }
+
     def __init__(self):
         pass
 
@@ -41,7 +52,22 @@ class NumeralDecimalConverter:
     # Method that will do the numeral to decimal conversions
     #
     def numeral_to_decimal_conversion(self, numeral_value):
-        return len(numeral_value)
+        # Break numeral string into list of characters
+        numeral_list = list(numeral_value)
+        # Set position in the list to the beginning
+        position = 0
+        # Set output value to zero
+        output_value = 0
+
+        # Loop through each numeral in the list
+        while position < len(numeral_list):
+            # Add the value of the current numeral to the output value
+            output_value += self.numeral_to_decimal_data[numeral_list[position]]
+            # Move to the next position in the list
+            position += 1
+
+        # Return the resulting value
+        return output_value
 
     #
     # Method that will do the decimal to numeral conversions
