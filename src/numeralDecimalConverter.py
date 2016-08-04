@@ -1,29 +1,10 @@
+from src.numeralDecimalUtils import NumeralDecimalUtils
+
+
 class NumeralDecimalConverter:
 
-    # Decimal to numeral conversion data dictionary
-    decimal_to_numeral_data = {
-        1000: {'numeral': 'M', 'reduced_by': 100},
-        500: {'numeral': 'D', 'reduced_by': 100},
-        100: {'numeral': 'C', 'reduced_by': 10},
-        50: {'numeral': 'L', 'reduced_by': 10},
-        10: {'numeral': 'X', 'reduced_by': 1},
-        5: {'numeral': 'V', 'reduced_by': 1},
-        1: {'numeral': 'I', 'reduced_by': 0}
-    }
-
-    # Numeral to decimal value data dictionary
-    numeral_to_decimal_data = {
-        'M': 1000,
-        'D': 500,
-        'C': 100,
-        'L': 50,
-        'X': 10,
-        'V': 5,
-        'I': 1
-    }
-
     def __init__(self):
-        pass
+        self.numeralDecimalUtils = NumeralDecimalUtils()
 
     #
     # Base method that will evaluate a user input on how to convert it
@@ -61,10 +42,13 @@ class NumeralDecimalConverter:
 
         # Loop through each numeral in the list
         while position < len(numeral_list):
-            if numeral_list[position] not in self.numeral_to_decimal_data:
+
+            # Get the best value for the numeral
+            result = self.numeralDecimalUtils.get_value(numeral_list[position])
+            if not result:
                 return False
-            # Add the value of the current numeral to the output value
-            output_value += self.numeral_to_decimal_data[numeral_list[position]]
+            output_value += result
+
             # Move to the next position in the list
             position += 1
 
@@ -82,28 +66,9 @@ class NumeralDecimalConverter:
         # Loop through this section, reducing the remaining decimal_value
         # until it reaches zero
         while decimal_value > 0:
-
-            # Go through each numeral value from highest to lowest to see if
-            # that numeral can be added to the output
-            for dict_decimal, decimal_data in sorted(self.decimal_to_numeral_data.items(), reverse=True):
-
-                # If the current numeral has a value less than or equal to
-                # the remaining decimal_value, add that numeral to the output
-                # and reduce by the value of the numeral
-                if dict_decimal <= decimal_value:
-                    output_string += decimal_data['numeral']
-                    decimal_value -= dict_decimal
-                    break
-
-                # If the current numeral minus its 'reduced by' value is less
-                # than or equal to the remaining decimal_value, add the numeral
-                # combo to the output and reduce by the value of the difference
-                # of the two numerals
-                elif (dict_decimal - decimal_data['reduced_by']) <= decimal_value:
-                    output_string += self.decimal_to_numeral_data[decimal_data['reduced_by']]['numeral'] + \
-                                     decimal_data['numeral']
-                    decimal_value -= (dict_decimal - decimal_data['reduced_by'])
-                    break
+            numeral_data = self.numeralDecimalUtils.get_best_numeral(decimal_value)
+            output_string += numeral_data['numeral']
+            decimal_value -= numeral_data['value']
 
         # Return the output string
         return output_string
