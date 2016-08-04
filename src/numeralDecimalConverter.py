@@ -39,9 +39,10 @@ class NumeralDecimalConverter:
         position = 0
         # Set output value to zero
         output_value = 0
-        # Keep track of the previous numeral value which is useful for
+        # Keep track of the previous numerals values which are useful for
         # "reduce by" calculations
         previous_value = 0
+        two_back_value = 0
         # Keep track of how many of the same numeral have repeated
         repeat_data = {'previous_numeral': '', 'numeral_repeat_count': 0, 'too_repetitive': False}
 
@@ -67,14 +68,18 @@ class NumeralDecimalConverter:
                 # First, make sure the previous value was a legal subtraction
                 if not self.numeralDecimalUtils.is_legal_subtraction(current_numeral, previous_value):
                     return False
+                # Next, make sure there haven't been two subtract values in a row
+                if previous_value == two_back_value:
+                    return False
                 # The previous value was added instead of subtracted. To deal
                 # with this, subtract 2x the previous value before adding the
                 # new value.
                 output_value -= (2 * previous_value)
 
-            # Add the current numeral's value, and set it as the "previous"
-            # value for the next iteration
+            # Add the current numeral's value, and set the "previous" value
+            # information for the next iteration
             output_value += result
+            two_back_value = previous_value
             previous_value = result
 
             # Move to the next position in the list

@@ -78,3 +78,6 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_convert_rejects_illegal_subtraction_numeral(self):
         self.assertFalse(self.converter.convert('VX'))
+
+    def test_convert_rejects_double_subtraction_numeral(self):
+        self.assertFalse(self.converter.convert('XXC'))
