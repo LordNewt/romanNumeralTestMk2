@@ -75,3 +75,6 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_convert_rejects_too_many_iterations_of_a_numeral(self):
         self.assertFalse(self.converter.convert('IIII'))
+
+    def test_convert_rejects_illegal_subtraction_numeral(self):
+        self.assertFalse(self.converter.convert('VX'))

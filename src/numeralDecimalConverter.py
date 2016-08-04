@@ -72,6 +72,9 @@ class NumeralDecimalConverter:
             # it indicates that the previous should have been subtracted, not
             # added.
             if 0 < previous_value < result:
+                # First, make sure the previous value was a legal subtraction
+                if not self.numeralDecimalUtils.is_legal_subtraction(current_numeral, previous_value):
+                    return False
                 # The previous value was added instead of subtracted. To deal
                 # with this, subtract 2x the previous value before adding the
                 # new value.

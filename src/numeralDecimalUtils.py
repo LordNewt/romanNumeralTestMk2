@@ -39,10 +39,20 @@ class NumeralDecimalUtils:
         return numeral_data['value']
 
     #
+    # Returns true if the supplied numeral has repeated for an illegal amount
+    # of times, otherwise will return false
+    #
     def is_numeral_too_repetitive(self, numeral, current_repeat_count):
         numeral_data = self.get_numeral_data(numeral)
         return numeral_data['max_repeats'] <= current_repeat_count
 
+    #
+    # Returns true if the previous numeral was a legal "subtract by" numeral,
+    # otherwise will return false
+    #
+    def is_legal_subtraction(self, numeral, previous_value):
+        numeral_data = self.get_numeral_data(numeral)
+        return numeral_data['reduced_by'] == previous_value
 
     #
     # Returns the best numeral (or numeral combo) for a given decimal value
