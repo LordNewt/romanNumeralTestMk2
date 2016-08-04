@@ -58,6 +58,9 @@ class NumeralDecimalConverterTest(unittest.TestCase):
     def test_convert_I_to_decimal_returns_1(self):
         self.assertEqual(1, self.converter.convert('I'))
 
+    def test_convert_i_to_decimal_returns_1(self):
+        self.assertEqual(1, self.converter.convert('i'))
+
     def test_convert_understands_repetitive_numerals(self):
         self.assertEqual(3, self.converter.convert('III'))
 

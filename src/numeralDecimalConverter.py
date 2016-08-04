@@ -43,7 +43,7 @@ class NumeralDecimalConverter:
 
         # Check if a numeral string was passed in to convert to a decimal
         if isinstance(user_input, str) and '.' not in user_input:
-            return self.numeral_to_decimal_conversion(user_input)
+            return self.numeral_to_decimal_conversion(user_input.upper())
 
         # No match means it was invalid, return false
         return False
