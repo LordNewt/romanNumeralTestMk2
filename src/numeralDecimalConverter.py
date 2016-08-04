@@ -39,6 +39,9 @@ class NumeralDecimalConverter:
         position = 0
         # Set output value to zero
         output_value = 0
+        # Keep track of the previous numeral value which is useful for
+        # "reduce by" calculations
+        previous_value = 0
 
         # Loop through each numeral in the list
         while position < len(numeral_list):
@@ -47,7 +50,18 @@ class NumeralDecimalConverter:
             result = self.numeralDecimalUtils.get_value(numeral_list[position])
             if not result:
                 return False
+
+            if 0 < previous_value < result:
+                # If the previous numeral value is less than the current numeral,
+                # it indicates that the previous should have been subtracted, not
+                # added.  Thus, subtract 2x the previous value before adding the
+                # new value.
+                output_value -= (2 * previous_value)
+
+            # Add the current numeral's value, and set it as the "previous"
+            # value for the next iteration
             output_value += result
+            previous_value = result
 
             # Move to the next position in the list
             position += 1

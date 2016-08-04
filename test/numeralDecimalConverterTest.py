@@ -69,3 +69,6 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_convert_recognizes_all_numerals(self):
         self.assertEqual(1666, self.converter.convert('MDCLXVI'))
+
+    def test_convert_understands_value_decrese_numerals(self):
+        self.assertEqual(4, self.converter.convert('IV'))
