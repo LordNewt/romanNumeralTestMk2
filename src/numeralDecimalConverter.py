@@ -42,19 +42,38 @@ class NumeralDecimalConverter:
         # Keep track of the previous numeral value which is useful for
         # "reduce by" calculations
         previous_value = 0
+        # Keep track of how many of the same numeral have repeated
+        current_numeral = ''
+        numeral_repeat_count = 0
 
         # Loop through each numeral in the list
         while position < len(numeral_list):
+
+            # Check if we've hit an illegally repetitive numeral. First,
+            # is it the same numeral
+            if current_numeral == numeral_list[position]:
+                # Same numeral, increase repeat count and check if it's been
+                # used too many times in a row
+                numeral_repeat_count += 1
+                if self.numeralDecimalUtils.is_numeral_too_repetitive(current_numeral, numeral_repeat_count):
+                    # Too many repeats, so it's illegal
+                    return False
+            else:
+                # New numeral, reset counter
+                current_numeral = numeral_list[position]
+                numeral_repeat_count = 0
 
             # Get the best value for the numeral
             result = self.numeralDecimalUtils.get_value(numeral_list[position])
             if not result:
                 return False
 
+            # If the previous numeral value is less than the current numeral,
+            # it indicates that the previous should have been subtracted, not
+            # added.
             if 0 < previous_value < result:
-                # If the previous numeral value is less than the current numeral,
-                # it indicates that the previous should have been subtracted, not
-                # added.  Thus, subtract 2x the previous value before adding the
+                # The previous value was added instead of subtracted. To deal
+                # with this, subtract 2x the previous value before adding the
                 # new value.
                 output_value -= (2 * previous_value)
 

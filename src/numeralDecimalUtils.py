@@ -2,13 +2,13 @@ class NumeralDecimalUtils:
 
     # Decimal/Numeral conversion data dictionary
     numeral_decimal_data = [
-        {'numeral': 'M', 'value': 1000, 'reduced_by': 100},
-        {'numeral': 'D', 'value': 500, 'reduced_by': 100},
-        {'numeral': 'C', 'value': 100, 'reduced_by': 10},
-        {'numeral': 'L', 'value': 50, 'reduced_by': 10},
-        {'numeral': 'X', 'value': 10, 'reduced_by': 1},
-        {'numeral': 'V', 'value': 5, 'reduced_by': 1},
-        {'numeral': 'I', 'value': 1, 'reduced_by': 0}
+        {'numeral': 'M', 'value': 1000, 'reduced_by': 100, 'max_repeats': 3},
+        {'numeral': 'D', 'value': 500, 'reduced_by': 100, 'max_repeats': 1},
+        {'numeral': 'C', 'value': 100, 'reduced_by': 10, 'max_repeats': 3},
+        {'numeral': 'L', 'value': 50, 'reduced_by': 10, 'max_repeats': 1},
+        {'numeral': 'X', 'value': 10, 'reduced_by': 1, 'max_repeats': 3},
+        {'numeral': 'V', 'value': 5, 'reduced_by': 1, 'max_repeats': 1},
+        {'numeral': 'I', 'value': 1, 'reduced_by': 0, 'max_repeats': 3}
     ]
 
     #
@@ -21,13 +21,28 @@ class NumeralDecimalUtils:
         return None
 
     #
+    # Returns the numeral data dictionary for a given numeral
+    #
+    def get_numeral_data(self, numeral):
+        for conversion_data in self.numeral_decimal_data:
+            if conversion_data['numeral'] == numeral:
+                return conversion_data
+        return {}
+
+    #
     # Returns the decimal value of the given numeral
     #
     def get_value(self, numeral):
-        for conversion_data in self.numeral_decimal_data:
-            if conversion_data['numeral'] == numeral:
-                return conversion_data['value']
-        return 0
+        numeral_data = self.get_numeral_data(numeral)
+        if not numeral_data:
+            return None
+        return numeral_data['value']
+
+    #
+    def is_numeral_too_repetitive(self, numeral, current_repeat_count):
+        numeral_data = self.get_numeral_data(numeral)
+        return numeral_data['max_repeats'] <= current_repeat_count
+
 
     #
     # Returns the best numeral (or numeral combo) for a given decimal value

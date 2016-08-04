@@ -72,3 +72,6 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_convert_understands_value_decrese_numerals(self):
         self.assertEqual(4, self.converter.convert('IV'))
+
+    def test_convert_rejects_too_many_iterations_of_a_numeral(self):
+        self.assertFalse(self.converter.convert('IIII'))
