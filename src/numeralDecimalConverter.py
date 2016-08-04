@@ -61,6 +61,8 @@ class NumeralDecimalConverter:
 
         # Loop through each numeral in the list
         while position < len(numeral_list):
+            if numeral_list[position] not in self.numeral_to_decimal_data:
+                return False
             # Add the value of the current numeral to the output value
             output_value += self.numeral_to_decimal_data[numeral_list[position]]
             # Move to the next position in the list
