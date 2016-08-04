@@ -41,8 +41,7 @@ class NumeralDecimalConverter:
         output_value = 0
         # Keep track of the previous numerals values which are useful for
         # "reduce by" calculations
-        previous_value = 0
-        two_back_value = 0
+        subtraction_data = {'subtract_by': 0, 'previous_value': 0, 'two_back_value': 0, 'invalid': False}
         # Keep track of how many of the same numeral have repeated
         repeat_data = {'previous_numeral': '', 'numeral_repeat_count': 0, 'too_repetitive': False}
 
@@ -64,23 +63,16 @@ class NumeralDecimalConverter:
             # If the previous numeral value is less than the current numeral,
             # it indicates that the previous should have been subtracted, not
             # added.
-            if 0 < previous_value < result:
-                # First, make sure the previous value was a legal subtraction
-                if not self.numeralDecimalUtils.is_legal_subtraction(current_numeral, previous_value):
-                    return False
-                # Next, make sure there haven't been two subtract values in a row
-                if previous_value == two_back_value:
-                    return False
-                # The previous value was added instead of subtracted. To deal
-                # with this, subtract 2x the previous value before adding the
-                # new value.
-                output_value -= (2 * previous_value)
+            subtraction_data = self.numeralDecimalUtils.check_for_subtraction(result, current_numeral, subtraction_data)
+            if subtraction_data['invalid']:
+                return False
+            output_value -= subtraction_data['subtract_by']
 
             # Add the current numeral's value, and set the "previous" value
             # information for the next iteration
             output_value += result
-            two_back_value = previous_value
-            previous_value = result
+            subtraction_data['two_back_value'] = subtraction_data['previous_value']
+            subtraction_data['previous_value'] = result
 
             # Move to the next position in the list
             position += 1

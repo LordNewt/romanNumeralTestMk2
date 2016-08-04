@@ -68,6 +68,25 @@ class NumeralDecimalUtils:
         return numeral_data['reduced_by'] == previous_value
 
     #
+    # Checks if a subtraction adjustment should occur to compensate for adding
+    # it in a previous iteration
+    #
+    def check_for_subtraction(self, current_value, current_numeral, subtraction_data):
+        subtraction_data['subtract_by'] = 0
+        if 0 < subtraction_data['previous_value'] < current_value:
+            # First, make sure the previous value was a legal subtraction
+            if not self.is_legal_subtraction(current_numeral, subtraction_data['previous_value']):
+                subtraction_data['invalid'] = True
+            # Next, make sure there haven't been two subtract values in a row
+            if subtraction_data['previous_value'] == subtraction_data['two_back_value']:
+                subtraction_data['invalid'] = True
+            # The previous value was added instead of subtracted. To deal
+            # with this, subtract 2x the previous value before adding the
+            # new value.
+            subtraction_data['subtract_by'] = (2 * subtraction_data['previous_value'])
+        return subtraction_data
+
+    #
     # Returns the best numeral (or numeral combo) for a given decimal value
     # as well as the value of that numeral
     #
