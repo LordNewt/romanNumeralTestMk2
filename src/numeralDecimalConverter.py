@@ -43,28 +43,20 @@ class NumeralDecimalConverter:
         # "reduce by" calculations
         previous_value = 0
         # Keep track of how many of the same numeral have repeated
-        current_numeral = ''
-        numeral_repeat_count = 0
+        repeat_data = {'previous_numeral': '', 'numeral_repeat_count': 0, 'too_repetitive': False}
 
         # Loop through each numeral in the list
         while position < len(numeral_list):
+            current_numeral = numeral_list[position]
 
             # Check if we've hit an illegally repetitive numeral. First,
             # is it the same numeral
-            if current_numeral == numeral_list[position]:
-                # Same numeral, increase repeat count and check if it's been
-                # used too many times in a row
-                numeral_repeat_count += 1
-                if self.numeralDecimalUtils.is_numeral_too_repetitive(current_numeral, numeral_repeat_count):
-                    # Too many repeats, so it's illegal
-                    return False
-            else:
-                # New numeral, reset counter
-                current_numeral = numeral_list[position]
-                numeral_repeat_count = 0
+            repeat_data = self.numeralDecimalUtils.is_numeral_too_repetitive(current_numeral, repeat_data)
+            if repeat_data['too_repetitive']:
+                return False
 
             # Get the best value for the numeral
-            result = self.numeralDecimalUtils.get_value(numeral_list[position])
+            result = self.numeralDecimalUtils.get_value(current_numeral)
             if not result:
                 return False
 

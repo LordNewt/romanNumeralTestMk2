@@ -39,12 +39,25 @@ class NumeralDecimalUtils:
         return numeral_data['value']
 
     #
-    # Returns true if the supplied numeral has repeated for an illegal amount
-    # of times, otherwise will return false
+    # Returns repeat count and validity information based on the passed-in
+    # numeral
     #
-    def is_numeral_too_repetitive(self, numeral, current_repeat_count):
+    def is_numeral_too_repetitive(self, numeral, repeat_data):
         numeral_data = self.get_numeral_data(numeral)
-        return numeral_data['max_repeats'] <= current_repeat_count
+        # Is the current numeral the same as the previous?
+        if numeral == repeat_data['previous_numeral']:
+            # Same numeral, increase repeat count and check if it's been
+            # used too many times in a row
+            repeat_data['numeral_repeat_count'] += 1
+            if numeral_data['max_repeats'] <= repeat_data['numeral_repeat_count']:
+                # Too many repeats, so it's illegal
+                repeat_data['too_repetitive'] = True
+        else:
+            # New numeral, reset counter
+            repeat_data['previous_numeral'] = numeral
+            repeat_data['numeral_repeat_count'] = 0
+        # Return the updated information
+        return repeat_data
 
     #
     # Returns true if the previous numeral was a legal "subtract by" numeral,
