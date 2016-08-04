@@ -46,3 +46,14 @@ class NumeralDecimalConverterTest(unittest.TestCase):
 
     def test_convert_can_combine_numerals_to_represent_value_decreases(self):
         self.assertEqual('IV', self.converter.convert(4))
+
+    def test_convert_can_handle_multiples_and_value_decreases(self):
+        self.assertEqual('MCMLXXXIX', self.converter.convert(1989))
+
+
+    #
+    # Numeral to decimal conversion tests
+    #
+
+    def test_convert_i_to_decimal_returns_1(self):
+        self.assertEqual(1, self.converter.convert('I'))

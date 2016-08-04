@@ -20,11 +20,21 @@ class NumeralDecimalConverter:
     #
     def convert(self, user_input):
 
+        # Empty input returns false
+        if not user_input:
+            return False
+
+        # Check if a decimal was passed in to convert to a numeral
         if isinstance(user_input, int):
             return self.decimal_to_numeral_conversion(user_input)
         elif isinstance(user_input, str) and user_input.isdecimal():
             return self.decimal_to_numeral_conversion(int(user_input))
 
+        # Check if a numeral string was passed in to convert to a decimal
+        if isinstance(user_input, str) and '.' not in user_input:
+            return 1
+
+        # No match means it was invalid, return false
         return False
 
     #
