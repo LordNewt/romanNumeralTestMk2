@@ -32,13 +32,19 @@ class NumeralDecimalConverter:
 
         # Check if a numeral string was passed in to convert to a decimal
         if isinstance(user_input, str) and '.' not in user_input:
-            return 1
+            return self.numeral_to_decimal_conversion(user_input)
 
         # No match means it was invalid, return false
         return False
 
     #
-    # Method that will only do decimal to numeral conversions
+    # Method that will do the numeral to decimal conversions
+    #
+    def numeral_to_decimal_conversion(self, numeral_value):
+        return len(numeral_value)
+
+    #
+    # Method that will do the decimal to numeral conversions
     #
     def decimal_to_numeral_conversion(self, decimal_value):
 
